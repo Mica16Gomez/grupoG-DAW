@@ -7,23 +7,24 @@ import { ButtonModule } from "primeng/button";
 import { Template } from "../../template/template";
 import { TooltipModule } from 'primeng/tooltip';
 import { GestionProyecto } from "../gestion/gestion-proyecto";
+import { DatePipe } from "@angular/common";
+// --- IMPORT PARA LAS ETIQUETAS DE COLORES ---
+import { TagModule } from 'primeng/tag'; 
 
 @Component({
   selector: "app-proyectos-listado",
   templateUrl: "./proyectos-listado.html",
   styleUrls: ["./proyectos-listado.css"],
-  imports: [TableModule, ButtonModule, Template, TooltipModule, GestionProyecto]
+  // --- AGREGAMOS TagModule AQUÍ ---
+  imports: [TableModule, ButtonModule, Template, TooltipModule, GestionProyecto, DatePipe, TagModule]
 })
 export class ProyectosListado implements OnInit {
 
   private readonly messageService: MessageService = inject(MessageService);
-
   private readonly proyectosListadoApiClient: ProyectosListadoApiClient = inject(ProyectosListadoApiClient);
 
   proyectos: WritableSignal<ListProyectoDTO[]> = signal([]);
-
   dialogVisible: WritableSignal<boolean> = signal(false);
-
   proyectoSeleccionado: WritableSignal<ListProyectoDTO | null> = signal<ListProyectoDTO | null>(null);
 
   constructor() {
@@ -60,6 +61,29 @@ export class ProyectosListado implements OnInit {
 
   gestionarTareas(proyecto: ListProyectoDTO): void {
     window.open(`/proyectos/${proyecto.id}/tareas`, '_blank');
+  }
+
+  // --- LÓGICA PARA CUMPLIR LA CONSIGNA DE LOS RETRASOS ---
+  calcularEstadoFecha(fechaStr: any): { texto: string, severidad: 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' } {
+    if (!fechaStr) return { texto: 'Sin fecha', severidad: 'secondary' };
+
+    const fechaFin = new Date(fechaStr);
+    const hoy = new Date();
+
+    // Igualamos las horas a cero para comparar solo los días exactos
+    hoy.setHours(0, 0, 0, 0);
+    fechaFin.setHours(0, 0, 0, 0);
+
+    const diffTime = fechaFin.getTime() - hoy.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+        return { texto: `Retrasado (${Math.abs(diffDays)} días)`, severidad: 'danger' }; // Rojo
+    } else if (diffDays === 0) {
+        return { texto: 'Vence hoy', severidad: 'warn' }; // Amarillo/Naranja
+    } else {
+        return { texto: `Faltan ${diffDays} días`, severidad: 'info' }; // Azul
+    }
   }
 
 }

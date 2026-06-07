@@ -69,6 +69,10 @@ export class ProyectosService {
             dto.id = p.id;
             dto.nombre = p.nombre;
             dto.estado = p.estado;
+
+            // --- AQUÍ ESTÁ LA LÍNEA MÁGICA QUE FALTABA ---
+            dto.fechaFinalizacion = p.fechaFinalizacion as any;
+
             if (p.cliente) {
                 dto.cliente = new ListClienteDTO();
                 dto.cliente.id = p.cliente.id
