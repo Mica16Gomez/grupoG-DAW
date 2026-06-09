@@ -1,43 +1,79 @@
 <app-template>
+  <div id="pagina-tareas">
     <section id="datos-basicos">
-        <div class="resumen">
-            <span style="font-weight: bold;">Proyecto: </span> {{ proyecto()?.nombre }}
-        </div>
-        @if (proyecto()?.cliente ){
-        <div class="resumen">
-            <span style="font-weight: bold;">Cliente: </span> {{ proyecto()?.cliente }}
+      <div class="resumen-card resumen-card--principal">
+        <span class="resumen-etiqueta">Proyecto</span>
+        <span class="resumen-valor">{{ proyecto()?.nombre }}</span>
+      </div>
 
+      @if (proyecto()?.cliente) {
+        <div class="resumen-card">
+          <span class="resumen-etiqueta">Cliente</span>
+          <span class="resumen-valor">{{ proyecto()?.cliente }}</span>
         </div>
-        }
-        <div class="resumen">
-            <span style="font-weight: bold;">Estado: </span> {{ proyecto()?.estado }}
-        </div>
+      }
+
+      <div class="resumen-card">
+        <span class="resumen-etiqueta">Estado</span>
+        <span class="resumen-valor">{{ proyecto()?.estado }}</span>
+      </div>
     </section>
-    <p-button id="boton-crear-tarea" icon="pi pi-plus" label="Crear Tarea" (click)="crearTarea()"></p-button>
-    <p-table id="tabla" [value]="tareas()" [tableStyle]="{ 'min-width': '50rem' }" [scrollable]="true"
-        scrollHeight="50vh">
-        <ng-template #header>
-            <tr>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-tarea>
-            <tr>
-                <td>{{ tarea.descripcion }}</td>
-                <td>{{ tarea.estado }}</td>
-                <td>
-                    <p-button icon="pi pi-pencil" pTooltip="Editar Tarea" (click)="editarTarea(tarea)"></p-button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template #emptymessage>
-            <tr>
-                <td colspan="4">No se encontraron tareas.</td>
-            </tr>
-        </ng-template>
+
+    <div class="acciones-superiores">
+      <p-button
+        label="Volver a proyectos"
+        icon="pi pi-arrow-left"
+        type="button"
+        styleClass="boton-secundario"
+        (click)="volverAProyectos()"
+      />
+
+      <p-button
+        label="Crear Tarea"
+        icon="pi pi-plus"
+        type="button"
+        styleClass="boton-primario"
+        (click)="crearTarea()"
+      />
+    </div>
+
+    <p-table [value]="tareas()" id="tabla" styleClass="tabla-tareas">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-tarea>
+        <tr>
+          <td>{{ tarea.descripcion }}</td>
+          <td>{{ tarea.estado }}</td>
+          <td>
+            <p-button
+              icon="pi pi-pencil"
+              type="button"
+              styleClass="boton-icono"
+              pTooltip="Editar tarea"
+              tooltipPosition="top"
+              (click)="editarTarea(tarea)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3">No se encontraron tareas.</td>
+        </tr>
+      </ng-template>
     </p-table>
+  </div>
 </app-template>
-<app-gestion-tarea [(visible)]="dialogVisible" [idProyecto]="idProyecto()"
-    [(tareaSeleccionada)]="tareaSeleccionada"></app-gestion-tarea>
+
+<app-gestion-tarea
+  [(visible)]="dialogVisible"
+  [(tareaSeleccionada)]="tareaSeleccionada"
+  [idProyecto]="idProyecto()"
+/>

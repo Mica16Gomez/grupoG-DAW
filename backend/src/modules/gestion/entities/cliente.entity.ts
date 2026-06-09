@@ -4,17 +4,21 @@ import { Proyecto } from "./proyecto.entity";
 
 @Entity({ name: "clientes" })
 export class Cliente {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @Column()
+  nombre!: string;
 
-    @Column()
-    nombre!: string;
+  @Column({ type: "varchar", length: 20, nullable: true })
+telefono!: string | null;
 
-    @Column({ type: 'enum', enum: EstadosClientesEnum })
-    estado!: EstadosClientesEnum
+  @Column({ type: "varchar", length: 150, nullable: true })
+  email!: string | null;
 
-    @OneToMany(() => Proyecto, (proyecto) => proyecto.cliente)
-    proyectos!: Proyecto[]
+  @Column({ type: "enum", enum: EstadosClientesEnum })
+  estado!: EstadosClientesEnum;
 
+  @OneToMany(() => Proyecto, (proyecto) => proyecto.cliente)
+  proyectos!: Proyecto[];
 }

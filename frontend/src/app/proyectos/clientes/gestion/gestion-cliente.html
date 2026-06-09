@@ -1,18 +1,107 @@
-<p-dialog [header]="header()" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" [visible]="visible()"
-    (onHide)="cerrarDialog()">
+<p-dialog
+  [visible]="visible()"
+  (visibleChange)="visible.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '38rem' }"
+  [header]="header()"
+  (onHide)="cerrarDialog()"
+  styleClass="cliente-dialog"
+>
+  <form [formGroup]="form" id="contenedor-formulario">
+    <div class="campo-formulario">
+      <label for="nombre">Nombre</label>
+      <input
+        pInputText
+        id="nombre"
+        formControlName="nombre"
+        placeholder="Ingrese el nombre del cliente"
+      />
 
-    <form [formGroup]="form">
-        <div id="contenedor-formulario">
+      @if (form.get("nombre")?.invalid && (form.get("nombre")?.touched || form.get("nombre")?.dirty)) {
+        <small class="mensaje-error">Ingrese el nombre del cliente.</small>
+      }
+    </div>
 
-            <input pInputText type="text" id="nombre" placeholder="Nombre" formControlName="nombre" />
+    <div class="campo-formulario">
+      <label for="telefono">Teléfono</label>
+      <input
+        pInputText
+        id="telefono"
+        formControlName="telefono"
+        placeholder="Ej: +5492615438843"
+      />
 
-            @if (clienteSeleccionado()) {
-            <p-select id="estado" formControlName="estado" [options]="estados()" placeholder="Estado" appendTo="body" />
-            }
+      @if (form.get("telefono")?.invalid && (form.get("telefono")?.touched || form.get("telefono")?.dirty)) {
+        <small class="mensaje-error">
+          Ingrese un teléfono válido, por ejemplo: +5492615438843. Puede comenzar con + y no debe superar los 15 dígitos.
+        </small>
+      }
+    </div>
 
-        </div>
-    </form>
+    <div class="campo-formulario">
+      <label for="email">Correo electrónico</label>
+      <input
+        pInputText
+        id="email"
+        formControlName="email"
+        placeholder="Ej: cliente@gmail.com"
+        maxlength="254"
+      />
 
-    <button pButton label="Guardar" (click)="guardarCliente()"></button>
+      @if (form.get("email")?.hasError("required") && (form.get("email")?.touched || form.get("email")?.dirty)) {
+        <small class="mensaje-error">
+          Ingrese un correo electrónico.
+        </small>
+      }
 
+      @if (form.get("email")?.hasError("email") && (form.get("email")?.touched || form.get("email")?.dirty)) {
+        <small class="mensaje-error">
+          Ingrese un correo electrónico válido.
+        </small>
+      }
+
+      @if (form.get("email")?.hasError("maxlength") && (form.get("email")?.touched || form.get("email")?.dirty)) {
+        <small class="mensaje-error">
+          El correo electrónico no debe superar los 254 caracteres.
+        </small>
+      }
+
+      @if (form.get("email")?.hasError("emailDominioNoPermitido") && (form.get("email")?.touched || form.get("email")?.dirty)) {
+        <small class="mensaje-error">
+          El dominio del correo no es válido. Use uno de estos: gmail.com, hotmail.com, outlook.com, live.com, yahoo.com, yahoo.com.ar o icloud.com.
+        </small>
+      }
+    </div>
+
+    @if (clienteSeleccionado()) {
+      <div class="campo-formulario">
+        <label for="estado">Estado</label>
+        <p-select
+          id="estado"
+          [options]="estados()"
+          formControlName="estado"
+          placeholder="Seleccione un estado"
+        />
+      </div>
+    }
+
+    <div class="acciones-formulario">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        type="button"
+        (click)="cerrarDialog()"
+        styleClass="boton-secundario"
+      />
+
+      <p-button
+        label="Guardar"
+        type="button"
+        (click)="guardarCliente()"
+        styleClass="boton-primario"
+      />
+    </div>
+  </form>
 </p-dialog>

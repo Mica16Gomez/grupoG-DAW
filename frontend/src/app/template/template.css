@@ -1,40 +1,83 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: inherit;
+}
+
+#layout {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(65, 214, 163, 0.06), transparent 26%),
+    linear-gradient(180deg, #05070d 0%, #0b1020 100%);
+  color: #f8fafc;
+}
+
 #header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 10vh;
-    background-color: lightcyan;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: 92px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.4rem;
+  background: rgba(226, 247, 247, 0.96);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+#header-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 #nombre-de-proyecto {
-    font-size: 1rem;
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(1.7rem, 2.4vw, 2.6rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+#subtitulo {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 #content {
-    position: fixed;
-    margin-top: 10vh;
-    width: 100%;
-    height: 90vh;
+  padding: 1.35rem;
+}
+
+:host ::ng-deep .boton-cerrar-sesion {
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #41d6a3, #28c891);
+  box-shadow: 0 10px 24px rgba(65, 214, 163, 0.2);
+  white-space: nowrap;
+}
+
+:host ::ng-deep .boton-cerrar-sesion .p-button-label {
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  #header {
+    flex-direction: column;
+    align-items: stretch;
     padding: 1rem;
-    overflow: auto;
-}
+  }
 
-::ng-deep .p-button {
-    font-size: 0.8rem !important;
-}
+  #subtitulo {
+    font-size: 0.88rem;
+  }
 
-
-@media (min-width: 768px) {
-    #nombre-de-proyecto {
-        font-size: 1.5rem;
-    }
-
-    ::ng-deep .p-button {
-        font-size: 1rem !important;
-    }
-
+  #content {
+    padding: 1rem;
+  }
 }

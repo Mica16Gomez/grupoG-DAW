@@ -4,10 +4,8 @@ import { CreateClienteDto } from "./create-cliente.dto";
 import { EstadosClientesEnum } from "../../enums/estados-clientes.enum";
 
 export class UpdateClienteDto extends PartialType(CreateClienteDto) {
-
-    @ApiProperty({ enum: EstadosClientesEnum, example: EstadosClientesEnum.ACTIVO })
-    @IsEnum(EstadosClientesEnum)
-    @IsOptional()
-    estado!: EstadosClientesEnum;
-
+  @ApiProperty({ enum: EstadosClientesEnum, example: EstadosClientesEnum.ACTIVO })
+  @IsEnum(EstadosClientesEnum)
+  @IsOptional()
+  estado!: EstadosClientesEnum;
 }
