@@ -13,16 +13,20 @@ export class Proyecto {
     nombre!: string;
 
     @Column({ type: 'enum', enum: EstadosProyectosEnum })
-    estado!: EstadosProyectosEnum
+    estado!: EstadosProyectosEnum;
 
     @Column({ name: "id_cliente" })
     idCliente!: number;
 
+    // --- NUEVO CAMPO: Fecha de finalización ---
+    @Column({ name: "fecha_finalizacion", type: "date", nullable: true })
+    fechaFinalizacion!: Date | null;
+
     @ManyToOne(()=>Cliente)
     @JoinColumn({name: "id_cliente"})
-    cliente!: Cliente
+    cliente!: Cliente;
 
     @OneToMany(()=>Tarea, (tarea)=> tarea.proyecto)
-    tareas!: Tarea[]
+    tareas!: Tarea[];
 
 }
