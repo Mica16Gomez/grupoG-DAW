@@ -1,6 +1,15 @@
-import { Component, effect, inject, model, ModelSignal, OnInit, signal, WritableSignal } from "@angular/core";
+import {
+  Component,
+  effect,
+  inject,
+  model,
+  ModelSignal,
+  OnInit,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { MessageService } from "primeng/api";
-import { TableModule } from 'primeng/table';
+import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
 import { ClientesListadoApiClient } from "./clientes-listado-api-client";
 import { ListClienteDTO } from "./list-cliente-dto";
@@ -11,21 +20,18 @@ import { GestionCliente } from "../gestion/gestion-cliente";
   selector: "app-clientes-listado",
   templateUrl: "./clientes-listado.html",
   styleUrls: ["./clientes-listado.css"],
-  imports: [TableModule, ButtonModule, DialogModule, GestionCliente]
+  imports: [TableModule, ButtonModule, DialogModule, GestionCliente],
 })
 export class ClientesListado implements OnInit {
-
   private readonly messageService: MessageService = inject(MessageService);
+  visible: ModelSignal<boolean> = model<boolean>(false);
+  private readonly clientesListadoApiClient: ClientesListadoApiClient =
+    inject(ClientesListadoApiClient);
 
-  visible: ModelSignal<boolean> = model(false);
-
-  private readonly clientesListadoApiClient: ClientesListadoApiClient = inject(ClientesListadoApiClient);
-
-  clientes: WritableSignal<ListClienteDTO[]> = signal([]);
-
-  dialogVisible: WritableSignal<boolean> = signal(false);
-
-  clienteSeleccionado: WritableSignal<ListClienteDTO | null> = signal<ListClienteDTO | null>(null);
+  clientes: WritableSignal<ListClienteDTO[]> = signal<ListClienteDTO[]>([]);
+  dialogVisible: WritableSignal<boolean> = signal<boolean>(false);
+  clienteSeleccionado: WritableSignal<ListClienteDTO | null> =
+    signal<ListClienteDTO | null>(null);
 
   constructor() {
     effect(() => {
@@ -44,13 +50,18 @@ export class ClientesListado implements OnInit {
       next: (data) => {
         this.clientes.set(data);
       },
-      error: (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al obtener los clientes' });
-      }
+      error: () => {
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al obtener los clientes",
+        });
+      },
     });
   }
 
   crearCliente(): void {
+    this.clienteSeleccionado.set(null);
     this.dialogVisible.set(true);
   }
 
@@ -58,9 +69,4 @@ export class ClientesListado implements OnInit {
     this.dialogVisible.set(true);
     this.clienteSeleccionado.set(cliente);
   }
-
-  abrirDialog(): void {
-    this.dialogVisible.set(true);
-  }
-
 }

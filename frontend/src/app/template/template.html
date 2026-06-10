@@ -1,7 +1,20 @@
-<header id="header">
-    <h1 id="nombre-de-proyecto">Sistema de Gestión de Proyectos</h1>
-    <p-button id="boton-cerrar-sesion" icon="pi pi-sign-out" label="Cerrar Sesión" (click)="cerrarSesion()"></p-button>
-</header>
-<div id="content">
+<div id="layout">
+  <header id="header">
+    <div id="header-brand">
+      <h1 id="nombre-de-proyecto">Sistema de Gestión de Proyectos</h1>
+      <p id="subtitulo">Administración de proyectos, clientes y tareas</p>
+    </div>
+
+    <p-button
+      label="Cerrar Sesión"
+      icon="pi pi-sign-out"
+      type="button"
+      styleClass="boton-cerrar-sesion"
+      (click)="cerrarSesion()"
+    />
+  </header>
+
+  <main id="content">
     <ng-content></ng-content>
+  </main>
 </div>
