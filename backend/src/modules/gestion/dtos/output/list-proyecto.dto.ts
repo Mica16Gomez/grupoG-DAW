@@ -13,6 +13,10 @@ export class ListProyectoDTO {
     @ApiProperty()
     estado!: EstadosProyectosEnum;
 
+    // --- NUEVO CAMPO AGREGADO --- fecha
+    @ApiProperty()
+    fechaFinalizacion!: Date;
+
     @ApiProperty()
     cliente!: ListClienteDTO;
 

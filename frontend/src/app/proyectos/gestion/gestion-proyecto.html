@@ -2,7 +2,7 @@
     (onHide)="cerrarDialog()">
 
     <form [formGroup]="form">
-        <div id="contenedor-formulario">
+        <div id="contenedor-formulario" style="display: flex; flex-direction: column; gap: 1rem;">
 
             <input pInputText type="text" id="nombre" placeholder="Nombre" formControlName="nombre" />
 
@@ -12,7 +12,9 @@
                 bindLabel="nombre"
                 placeholder="Cliente"
                 [clearable]="true"
-            />
+            ></ng-select>
+
+            <p-datepicker formControlName="fechaFinalizacion" placeholder="Fecha límite" appendTo="body" dateFormat="dd/mm/yy"></p-datepicker>
 
             <button id="boton-gestionar-clientes" pButton label="Gestionar Clientes" (click)="gestionarClientes()"
                 severity="secondary"></button>

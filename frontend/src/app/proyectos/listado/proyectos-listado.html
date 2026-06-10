@@ -7,6 +7,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Cliente</th>
+                <th>Fecha Fin</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -15,6 +16,19 @@
             <tr>
                 <td>{{ proyecto.nombre }}</td>
                 <td>{{ proyecto.cliente? proyecto.cliente.nombre: '' }}</td>
+                
+                <td>
+                    @if (proyecto.fechaFinalizacion) {
+                        <div style="display: flex; flex-direction: column; gap: 0.3rem; align-items: start;">
+                            <span style="font-size: 0.9rem;">{{ proyecto.fechaFinalizacion | date:'dd/MM/yyyy' }}</span>
+                            <p-tag [value]="calcularEstadoFecha(proyecto.fechaFinalizacion).texto" 
+                                   [severity]="calcularEstadoFecha(proyecto.fechaFinalizacion).severidad"></p-tag>
+                        </div>
+                    } @else {
+                        <span style="color: gray; font-style: italic;">Sin fecha</span>
+                    }
+                </td>
+                
                 <td>{{ proyecto.estado }}</td>
                 <td>
                     <p-button id="boton-gestionar-tareas" icon="pi pi-list" pTooltip="Gestionar Tareas"
@@ -26,7 +40,7 @@
         </ng-template>
         <ng-template #emptymessage>
             <tr>
-                <td colspan="4">No se encontraron proyectos.</td>
+                <td colspan="5">No se encontraron proyectos.</td>
             </tr>
         </ng-template>
     </p-table>

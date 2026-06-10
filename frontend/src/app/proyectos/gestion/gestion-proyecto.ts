@@ -15,29 +15,25 @@ import { ClientesListadoApiClient } from "../clientes/listado/clientes-listado-a
 import { ClientesListado } from "../clientes/listado/clientes-listado";
 import { EstadosClientesEnum } from "../clientes/estados-clientes-enum";
 import { NgSelectModule } from '@ng-select/ng-select';
+// --- AHORA USAMOS DATEPICKER EN LUGAR DE CALENDAR ---
+import { DatePickerModule } from 'primeng/datepicker'; 
 
 @Component({
     selector: "app-gestion-proyecto",
     templateUrl: "./gestion-proyecto.html",
     styleUrls: ["./gestion-proyecto.css"],
-    imports: [DialogModule, InputTextModule, SelectModule, ButtonModule, ReactiveFormsModule, ClientesListado, NgSelectModule]
+    // --- CAMBIADO AQUÍ TAMBIÉN ---
+    imports: [DialogModule, InputTextModule, SelectModule, ButtonModule, ReactiveFormsModule, ClientesListado, NgSelectModule, DatePickerModule] 
 })
 export class GestionProyecto {
 
     visible: ModelSignal<boolean> = model(false);
-
     readonly dialogClientesVisible: WritableSignal<boolean> = signal<boolean>(false);
-
     proyectoSeleccionado: ModelSignal<ListProyectoDTO | null> = model<ListProyectoDTO | null>(null);
-
     readonly estados: WritableSignal<string[]> = signal(Object.values(EstadosProyectosEnum));
-
     private readonly messageService: MessageService = inject(MessageService);
-
     private readonly gestionProyectoApiClient = inject(GestionProyectoApiClient);
-
     readonly clientes: WritableSignal<ListClienteDTO[]> = signal<ListClienteDTO[]>([]);
-
     private readonly clientesListadoApiClient: ClientesListadoApiClient = inject(ClientesListadoApiClient);
 
     header: Signal<string> = computed(() => {
@@ -50,23 +46,28 @@ export class GestionProyecto {
     readonly form: FormGroup = new FormGroup({
         nombre: new FormControl("", [Validators.required]),
         cliente: new FormControl(null),
-        estado: new FormControl(null)
+        estado: new FormControl(null),
+        fechaFinalizacion: new FormControl(null) 
     });
 
     constructor() {
         effect(() => {
             if (this.proyectoSeleccionado()) {
+                const fecha = this.proyectoSeleccionado()?.fechaFinalizacion ? new Date(this.proyectoSeleccionado()!.fechaFinalizacion!) : null;
+                
                 this.form.patchValue({
                     nombre: this.proyectoSeleccionado()?.nombre,
                     cliente: this.proyectoSeleccionado()?.cliente,
-                    estado: this.proyectoSeleccionado()?.estado
+                    estado: this.proyectoSeleccionado()?.estado,
+                    fechaFinalizacion: fecha 
                 });
             }
             else {
                 this.form.reset({
                     nombre: "",
                     cliente: null,
-                    estado: EstadosProyectosEnum.ACTIVO
+                    estado: EstadosProyectosEnum.ACTIVO,
+                    fechaFinalizacion: null 
                 });
             }
         });
@@ -76,7 +77,6 @@ export class GestionProyecto {
                 this.refrescarClientes();
             }
         });
-
     }
 
     ngOnInit(): void {
@@ -112,7 +112,8 @@ export class GestionProyecto {
             const dto: UpdateProyectoDto = {
                 nombre: formRawValue.nombre,
                 idCliente: formRawValue.cliente ? formRawValue.cliente.id : null,
-                estado: formRawValue.estado
+                estado: formRawValue.estado,
+                fechaFinalizacion: formRawValue.fechaFinalizacion 
             };
             this.gestionProyectoApiClient.actualizarProyecto(this.proyectoSeleccionado()?.id!, dto).subscribe({
                 next: () => {
@@ -122,10 +123,10 @@ export class GestionProyecto {
                 error: (err) => {
                     let detail: string = "";
                     if (err.error.statusCode >= 400 && err.error.statusCode < 500) {
-                        detail = err.error.message
+                        detail = err.error.message;
                     }
                     else {
-                        detail = "Ha ocurrido un error al actualizar el proyecto"
+                        detail = "Ha ocurrido un error al actualizar el proyecto";
                     }
                     this.messageService.add({ severity: 'error', summary: 'Error', detail: detail });
                 }
@@ -133,7 +134,8 @@ export class GestionProyecto {
         } else {
             const dto: CreateProyectoDTO = {
                 nombre: formRawValue.nombre,
-                idCliente: formRawValue.cliente ? formRawValue.cliente.id : null
+                idCliente: formRawValue.cliente ? formRawValue.cliente.id : null,
+                fechaFinalizacion: formRawValue.fechaFinalizacion 
             };
             this.gestionProyectoApiClient.crearProyecto(dto).subscribe({
                 next: () => {
@@ -143,10 +145,10 @@ export class GestionProyecto {
                 error: (err) => {
                     let detail: string = "";
                     if (err.error.statusCode >= 400 && err.error.statusCode < 500) {
-                        detail = err.error.message
+                        detail = err.error.message;
                     }
                     else {
-                        detail = "Ha ocurrido un error al crear el proyecto"
+                        detail = "Ha ocurrido un error al crear el proyecto";
                     }
                     this.messageService.add({ severity: 'error', summary: 'Error', detail: detail });
                 }
@@ -157,5 +159,4 @@ export class GestionProyecto {
     gestionarClientes(): void {
         this.dialogClientesVisible.set(true);
     }
-
 }
