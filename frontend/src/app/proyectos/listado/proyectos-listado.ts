@@ -62,4 +62,28 @@ export class ProyectosListado implements OnInit {
     window.open(`/proyectos/${proyecto.id}/tareas`, '_blank');
   }
 
+  descargarReporteCSV() {
+  this.proyectosListadoApiClient.exportarCSV().subscribe({
+    next: (blob: Blob) => {
+      // Creamos un enlace de descarga en memoria del navegador
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      
+      // Nombre que tendrá el archivo guardado
+      link.download = `reporte_proyectos_${new Date().toISOString().slice(0,10)}.csv`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Limpiamos la memoria del navegador
+      window.URL.revokeObjectURL(blobUrl);
+    },
+    error: (err) => {
+      console.error('Error al descargar el archivo CSV:', err);
+    }
+  });
+}
+
 }

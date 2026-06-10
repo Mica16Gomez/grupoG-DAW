@@ -1,4 +1,5 @@
-import { Body, Controller, Get, NotImplementedException, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, NotImplementedException, Param, Post, Put, UseGuards,  Header, Res } from "@nestjs/common";
+import type { Response } from "express";
 import { CreateProyectoDto } from "../dtos/input/create-proyecto.dto";
 import { UpdateProyectoDto } from "../dtos/input/update-proyecto.dto";
 import { ApiBearerAuth, ApiOkResponse } from "@nestjs/swagger";
@@ -44,5 +45,26 @@ export class ProyectosController {
     async obtenerProyecto(@Param('id') id: number): Promise<ProyectoDTO> {
 
         return await this.proyectosService.obtenerProyecto(id);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Get('exportar/csv')
+    @Header('Content-Type', 'text/csv; charset=utf-8')
+    @Header('Content-Disposition', 'attachment; filename=proyectos.csv')
+    async exportarProyectosCSV(@Res() res: Response): Promise<void> {
+        
+        const proyectos = await this.proyectosService.obtenerProyectos(); 
+
+        let csvData = 'ID,Nombre del Proyecto,Cliente,Estado\n';
+
+        proyectos.forEach(p => {
+            const nombreProyecto = p.nombre.replace(/,/g, ' ');
+            const nombreCliente = p.cliente ? p.cliente.nombre.replace(/,/g, ' ') : 'Sin Cliente';
+            
+            csvData += `${p.id},"${nombreProyecto}","${nombreCliente}","${p.estado}"\n`;
+        });
+
+        res.status(200).send(Buffer.from(csvData, 'utf-8'));
     }
 }

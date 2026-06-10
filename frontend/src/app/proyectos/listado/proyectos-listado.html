@@ -1,5 +1,6 @@
 <app-template>
     <p-button id="boton-crear-proyecto" icon="pi pi-plus" label="Crear Proyecto" (click)="crearProyecto()"></p-button>
+    <p-button label="Exportar CSV" icon="pi pi-download" severity="info" (onClick)="descargarReporteCSV()"></p-button>
     <p-table id="tabla" [value]="proyectos()" [tableStyle]="{ 'min-width': '50rem'}" [scrollable]="true"
         scrollHeight="70vh">
         <ng-template #header>
