@@ -18,8 +18,14 @@ async function bootstrap() {
     defaultVersion: '1',
   });
 
+  app.enableCors();
+
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
   );
 
   if (process.env.SWAGGER_HABILITADO === 'true') {

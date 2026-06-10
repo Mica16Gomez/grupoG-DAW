@@ -5,6 +5,8 @@
 body {
   margin: 0;
   font-family: "Manrope", "Segoe UI", Roboto, Arial, sans-serif;
+  background: #0a0f14;
+  color: #e2e8f0;
 }
 
 .p-dialog{

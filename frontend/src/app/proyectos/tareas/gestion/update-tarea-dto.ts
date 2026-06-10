@@ -1,8 +1,6 @@
-import { EstadosTareasEnum } from "../estados-tareas-enum";
-import { CreateTareaDTO } from "./create-tarea-dto";
+import { EstadosTareasEnum } from '../estados-tareas-enum';
 
-export interface UpdateTareaDto extends Pick<CreateTareaDTO, "descripcion"> {
-
-    estado: EstadosTareasEnum;
-
+export interface UpdateTareaDto {
+    descripcion?: string;
+    estado?: EstadosTareasEnum;
 }

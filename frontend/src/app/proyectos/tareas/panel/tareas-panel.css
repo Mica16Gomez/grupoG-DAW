@@ -1,0 +1,134 @@
+.kanban-board {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    min-height: 55vh;
+}
+
+.kanban-column {
+    flex: 1;
+    min-width: 260px;
+    border-radius: 12px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid transparent;
+}
+
+.kanban-column--pendiente {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.35);
+}
+
+.kanban-column--pendiente .kanban-column-header h3 {
+    color: #fbbf24;
+}
+
+.kanban-column--pendiente .kanban-count {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fde68a;
+}
+
+.kanban-column--finalizada {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.35);
+}
+
+.kanban-column--finalizada .kanban-column-header h3 {
+    color: #4ade80;
+}
+
+.kanban-column--finalizada .kanban-count {
+    background: rgba(34, 197, 94, 0.2);
+    color: #bbf7d0;
+}
+
+.kanban-column--baja {
+    background: rgba(148, 163, 184, 0.12);
+    border-color: rgba(148, 163, 184, 0.35);
+}
+
+.kanban-column--baja .kanban-column-header h3 {
+    color: #cbd5e1;
+}
+
+.kanban-column--baja .kanban-count {
+    background: rgba(148, 163, 184, 0.22);
+    color: #e2e8f0;
+}
+
+.kanban-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    padding: 0 0.25rem;
+}
+
+.kanban-column-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.kanban-count {
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    min-height: 120px;
+}
+
+.tarea-card {
+    background: #1a2332;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    cursor: grab;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.tarea-card:hover {
+    border-color: rgba(74, 222, 128, 0.4);
+}
+
+.tarea-card:active {
+    cursor: grabbing;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.tarea-descripcion {
+    margin: 0 0 0.5rem;
+    word-break: break-word;
+    line-height: 1.45;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+}
+
+.tarea-acciones {
+    display: flex;
+    justify-content: flex-end;
+}
+
+:host ::ng-deep .tarea-acciones .p-button {
+    color: #4ade80 !important;
+}
+
+.kanban-empty {
+    margin: 0;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    color: rgba(226, 232, 240, 0.55);
+    font-size: 0.9rem;
+    font-style: italic;
+}

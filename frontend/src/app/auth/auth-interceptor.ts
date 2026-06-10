@@ -1,22 +1,36 @@
-import { HttpEvent, HttpHandlerFn, HttpRequest } from "@angular/common/http";
-import { inject } from "@angular/core";
-import { Observable } from "rxjs/internal/Observable";
-import { AuthStore } from "./auth-store";
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandlerFn,
+    HttpRequest,
+} from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthStore } from './auth-store';
 
 export function authInterceptor(
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+    req: HttpRequest<unknown>,
+    next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
+    const authStore = inject(AuthStore);
+    const authToken = authStore.obtenerToken();
 
-  const authToken = inject(AuthStore).obtenerToken();
+    const request = authToken
+        ? req.clone({
+              headers: req.headers.set(
+                  'Authorization',
+                  `Bearer ${authToken}`,
+              ),
+          })
+        : req;
 
-  if (!authToken) {
-    return next(req);
-  }
-
-  const reqWithToken = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${authToken}`)
-  });
-
-  return next(reqWithToken);
+    return next(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+            if (error.status === 401 && !req.url.includes('/auth')) {
+                authStore.cerrarSesion();
+            }
+            return throwError(() => error);
+        }),
+    );
 }

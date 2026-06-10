@@ -1,26 +1,45 @@
-#tabla{
-    margin-top: 1rem;
-}   
-
-.resumen{
-    font-size: 1.3rem;
-    background-color: azure;
-    border-radius: 15px;
-    width: fit-content;
-    height: 8vh;
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-}
-
-#datos-basicos{
+#datos-basicos {
     display: flex;
     align-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
-    background-color: lightgoldenrodyellow;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.resumen {
+    font-size: 1rem;
+    background: rgba(38, 191, 166, 0.12);
+    border: 1px solid rgba(38, 191, 166, 0.28);
+    border-radius: 12px;
+    width: fit-content;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    color: #e2e8f0;
+}
+
+.resumen-label {
+    font-weight: 700;
+    margin-right: 0.35rem;
+    color: #4ade80;
+}
+
+.acciones-tareas {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
+}
+
+.panel-hint {
+    color: rgba(226, 232, 240, 0.8);
+    font-size: 0.9rem;
 }

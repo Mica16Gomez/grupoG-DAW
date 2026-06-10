@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotImplementedException, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
 import { CreateProyectoDto } from "../dtos/input/create-proyecto.dto";
 import { UpdateProyectoDto } from "../dtos/input/update-proyecto.dto";
 import { ApiBearerAuth, ApiOkResponse } from "@nestjs/swagger";
@@ -24,7 +24,7 @@ export class ProyectosController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Put(':id')
-    async actualizarProyecto(@Body() dto: UpdateProyectoDto, @Param('id') id: number): Promise<void> {
+    async actualizarProyecto(@Body() dto: UpdateProyectoDto, @Param('id', ParseIntPipe) id: number): Promise<void> {
 
         await this.proyectosService.actualizarProyecto(id, dto);
     }
@@ -41,7 +41,7 @@ export class ProyectosController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Get(':id')
-    async obtenerProyecto(@Param('id') id: number): Promise<ProyectoDTO> {
+    async obtenerProyecto(@Param('id', ParseIntPipe) id: number): Promise<ProyectoDTO> {
 
         return await this.proyectosService.obtenerProyecto(id);
     }

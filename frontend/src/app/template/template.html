@@ -1,5 +1,13 @@
 <header id="header">
     <h1 id="nombre-de-proyecto">Sistema de Gestión de Proyectos</h1>
+    <nav id="nav-principal">
+        <a routerLink="/proyectos" routerLinkActive="nav-activo" class="nav-link">
+            <i class="pi pi-folder"></i> Proyectos
+        </a>
+        <a routerLink="/estadisticas" routerLinkActive="nav-activo" class="nav-link">
+            <i class="pi pi-chart-bar"></i> Estadísticas
+        </a>
+    </nav>
     <p-button id="boton-cerrar-sesion" icon="pi pi-sign-out" label="Cerrar Sesión" (click)="cerrarSesion()"></p-button>
 </header>
 <div id="content">

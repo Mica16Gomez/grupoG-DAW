@@ -46,7 +46,8 @@ export class Login {
                 this.router.navigateByUrl("/proyectos");
             },
             error: (err)=>{
-                this.messageService.add({severity: "error", summary: "Ha ocurrido un error al iniciar sesión"})
+                const detail = err.error?.message ?? "Ha ocurrido un error al iniciar sesión";
+                this.messageService.add({severity: "error", summary: "Error", detail});
             }
         });
 

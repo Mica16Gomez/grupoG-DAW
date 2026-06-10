@@ -6,6 +6,9 @@
 .login-page {
   min-height: 100vh;
   padding: 32px;
+  background:
+    radial-gradient(circle at top left, rgba(38, 191, 166, 0.12), transparent 30%),
+    linear-gradient(160deg, #070b10 0%, #0c2135 55%, #0a0f14 100%);
 }
 
 .login-shell {

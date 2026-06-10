@@ -1,0 +1,38 @@
+<div class="kanban-board">
+    @for (columna of columnas; track columna.estado) {
+        <section
+            [class]="'kanban-column ' + columna.clase"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop(columna.estado, $event)"
+        >
+            <header class="kanban-column-header">
+                <h3>{{ columna.titulo }}</h3>
+                <span class="kanban-count">{{ tareasPorEstado(columna.estado).length }}</span>
+            </header>
+
+            <div class="kanban-cards">
+                @for (tarea of tareasPorEstado(columna.estado); track tarea.id) {
+                    <article
+                        class="tarea-card"
+                        draggable="true"
+                        (dragstart)="onDragStart(tarea, $event)"
+                        (dragend)="onDragEnd()"
+                    >
+                        <p class="tarea-descripcion">{{ tarea.descripcion }}</p>
+                        <div class="tarea-acciones">
+                            <p-button
+                                icon="pi pi-pencil"
+                                [text]="true"
+                                size="small"
+                                pTooltip="Editar tarea"
+                                (click)="editarTarea.emit(tarea)"
+                            />
+                        </div>
+                    </article>
+                } @empty {
+                    <p class="kanban-empty">Sin tareas en esta columna</p>
+                }
+            </div>
+        </section>
+    }
+</div>

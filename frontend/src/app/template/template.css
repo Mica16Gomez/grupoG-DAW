@@ -3,15 +3,52 @@
     top: 0;
     width: 100%;
     height: 10vh;
-    background-color: lightcyan;
+    background: linear-gradient(135deg, #0c2135 0%, #113250 100%);
+    border-bottom: 1px solid rgba(38, 191, 166, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    z-index: 100;
 }
 
 #nombre-de-proyecto {
     font-size: 1rem;
+    color: #4ade80;
+    margin: 0;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+#nav-principal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    color: rgba(226, 232, 240, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover {
+    background: rgba(74, 222, 128, 0.12);
+    color: #4ade80;
+}
+
+.nav-activo {
+    background: rgba(74, 222, 128, 0.18);
+    color: #4ade80;
 }
 
 #content {
@@ -21,12 +58,33 @@
     height: 90vh;
     padding: 1rem;
     overflow: auto;
+    background: #0a0f14;
+    color: #e2e8f0;
 }
 
 ::ng-deep .p-button {
     font-size: 0.8rem !important;
 }
 
+@media (max-width: 768px) {
+    #header {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 10vh;
+        gap: 0.5rem;
+    }
+
+    #nav-principal {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    #content {
+        margin-top: 14vh;
+        height: 86vh;
+    }
+}
 
 @media (min-width: 768px) {
     #nombre-de-proyecto {
@@ -36,5 +94,4 @@
     ::ng-deep .p-button {
         font-size: 1rem !important;
     }
-
 }
