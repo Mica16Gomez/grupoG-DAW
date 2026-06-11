@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/proyectos/tareas/gestion/gestion-tarea.css"],
+  "sourcesContent": ["#contenedor-formulario{\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n#descripcion{\r\n    margin-bottom: 1rem;\r\n}\r\n\r\n#estado{\r\n    margin-bottom: 1rem;\r\n}"],
+  "mappings": ";AAAA,CAAC;AACG,WAAS;AACT,kBAAgB;AACpB;AAEA,CAAC;AACG,iBAAe;AACnB;AAEA,CAAC;AACG,iBAAe;AACnB;",
+  "names": []
+}

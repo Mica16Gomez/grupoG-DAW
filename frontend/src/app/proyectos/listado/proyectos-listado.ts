@@ -1,4 +1,5 @@
-import { Component, effect, inject, OnInit, signal, WritableSignal } from "@angular/core";
+import { Component, effect, inject, signal, WritableSignal } from "@angular/core";
+import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { ListProyectoDTO } from "./list-proyecto-dto";
 import { ProyectosListadoApiClient } from "./proyectos-listado-api-client";
@@ -18,24 +19,28 @@ import { TagModule } from 'primeng/tag';
   // --- AGREGAMOS TagModule AQUÍ ---
   imports: [TableModule, ButtonModule, Template, TooltipModule, GestionProyecto, DatePipe, TagModule]
 })
-export class ProyectosListado implements OnInit {
+export class ProyectosListado {
 
   private readonly messageService: MessageService = inject(MessageService);
   private readonly proyectosListadoApiClient: ProyectosListadoApiClient = inject(ProyectosListadoApiClient);
+
+  private readonly router: Router = inject(Router);
 
   proyectos: WritableSignal<ListProyectoDTO[]> = signal([]);
   dialogVisible: WritableSignal<boolean> = signal(false);
   proyectoSeleccionado: WritableSignal<ListProyectoDTO | null> = signal<ListProyectoDTO | null>(null);
 
+  private dialogEstabaAbierto = false;
+
   constructor() {
     effect(() => {
-      if (!this.dialogVisible()) {
+      const visible = this.dialogVisible();
+      if (this.dialogEstabaAbierto && !visible) {
         this.refrescarProyectos();
       }
+      this.dialogEstabaAbierto = visible;
     });
-  }
 
-  ngOnInit(): void {
     this.refrescarProyectos();
   }
 
@@ -60,7 +65,7 @@ export class ProyectosListado implements OnInit {
   }
 
   gestionarTareas(proyecto: ListProyectoDTO): void {
-    window.open(`/proyectos/${proyecto.id}/tareas`, '_blank');
+    this.router.navigate(['/proyectos', proyecto.id, 'tareas']);
   }
 
   descargarReporteCSV() {

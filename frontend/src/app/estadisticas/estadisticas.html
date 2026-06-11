@@ -1,0 +1,109 @@
+<app-template>
+    <section class="estadisticas-header">
+        <div>
+            <h2>Estadísticas del sistema</h2>
+            <p class="subtitulo">Métricas generales de proyectos, tareas y clientes</p>
+        </div>
+        <p-button
+            icon="pi pi-refresh"
+            label="Actualizar"
+            [loading]="cargando()"
+            (click)="cargarEstadisticas()"
+        />
+    </section>
+
+    @if (cargando()) {
+        <p class="estado-carga">Cargando estadísticas...</p>
+    } @else if (estadisticas()) {
+        <section class="metricas-grid">
+            @for (tarjeta of tarjetas(); track tarjeta.titulo) {
+                <article class="metrica-card" [class]="tarjeta.clase">
+                    <div class="metrica-icono">
+                        <i [class]="tarjeta.icono"></i>
+                    </div>
+                    <div class="metrica-info">
+                        <span class="metrica-valor">{{ tarjeta.valor }}</span>
+                        <span class="metrica-titulo">{{ tarjeta.titulo }}</span>
+                    </div>
+                </article>
+            }
+        </section>
+
+        <div class="paneles-grid">
+            <section class="panel panel-tabla">
+                <h3>Proyectos por cliente</h3>
+                <p-table
+                    [value]="estadisticas()!.proyectosPorCliente"
+                    [tableStyle]="{ 'min-width': '100%' }"
+                >
+                    <ng-template #header>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Cantidad de proyectos</th>
+                            <th>% del total</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-fila>
+                        <tr>
+                            <td>{{ fila.nombreCliente }}</td>
+                            <td>{{ fila.cantidadProyectos }}</td>
+                            <td>
+                                {{
+                                    porcentaje(
+                                        fila.cantidadProyectos,
+                                        estadisticas()!.resumen.proyectosTotal
+                                    )
+                                }}%
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #emptymessage>
+                        <tr>
+                            <td colspan="3">No hay proyectos registrados.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </section>
+
+            <section class="panel panel-barras">
+                <h3>Tareas por estado</h3>
+                <div class="barras-lista">
+                    @for (item of estadisticas()!.tareasPorEstado; track item.estado) {
+                        <div class="barra-item">
+                            <div class="barra-etiquetas">
+                                <span>{{ item.estado }}</span>
+                                <span>{{ item.cantidad }}</span>
+                            </div>
+                            <div class="barra-fondo">
+                                <div
+                                    class="barra-relleno barra-relleno--tarea"
+                                    [style.width.%]="barraAncho(item, estadisticas()!.tareasPorEstado)"
+                                ></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <section class="panel panel-barras">
+                <h3>Proyectos por estado</h3>
+                <div class="barras-lista">
+                    @for (item of estadisticas()!.proyectosPorEstado; track item.estado) {
+                        <div class="barra-item">
+                            <div class="barra-etiquetas">
+                                <span>{{ item.estado }}</span>
+                                <span>{{ item.cantidad }}</span>
+                            </div>
+                            <div class="barra-fondo">
+                                <div
+                                    class="barra-relleno barra-relleno--proyecto"
+                                    [style.width.%]="barraAncho(item, estadisticas()!.proyectosPorEstado)"
+                                ></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        </div>
+    }
+</app-template>

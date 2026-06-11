@@ -4,7 +4,7 @@ import { Proyecto } from "../entities/proyecto.entity";
 import { Repository, In } from "typeorm";
 import { EstadosProyectosEnum } from "../enums/estados-proyectos.enum";
 import { UpdateProyectoDto } from "../dtos/input/update-proyecto.dto";
-import { BadRequestException, forwardRef, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ListProyectoDTO } from "../dtos/output/list-proyecto.dto";
 import { ProyectoDTO } from "../dtos/output/proyecto.dto";
 import { ListTareaDTO } from "../dtos/output/list-tarea.dto";
@@ -40,7 +40,7 @@ export class ProyectosService {
         const proyecto: Proyecto | null = await this.repository.findOne({ where: { id } });
 
         if (!proyecto) {
-            throw new BadRequestException('Proyecto no encontrado');
+            throw new NotFoundException('Proyecto no encontrado');
         }
 
         if (dto.idCliente) {
@@ -91,7 +91,7 @@ export class ProyectosService {
         const proyecto: Proyecto | null = await this.repository.findOne({ where: { id }, relations: ['cliente', 'tareas'], order: { tareas: { id: 'ASC' } } });
 
         if (!proyecto) {
-            throw new BadRequestException('Proyecto no encontrado');
+            throw new NotFoundException('Proyecto no encontrado');
         }
 
         const dto = new ProyectoDTO();

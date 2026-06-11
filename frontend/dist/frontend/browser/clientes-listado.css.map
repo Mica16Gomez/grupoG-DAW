@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/proyectos/clientes/listado/clientes-listado.css"],
+  "sourcesContent": ["#tabla{\r\n    margin-top: 1rem;\r\n}   "],
+  "mappings": ";AAAA,CAAC;AACG,cAAY;AAChB;",
+  "names": []
+}

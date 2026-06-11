@@ -14,12 +14,8 @@ export class AuthService {
 
         const usuario = await this.usuariosService.buscarUsuarioActivoPorNombre(dto.nombre);
 
-        if (!usuario) {
-            throw new UnauthorizedException("Usuario no encontrado");
-        }
-
-        if (!bcrypt.compareSync(dto.clave, usuario.clave)) {
-            throw new UnauthorizedException();
+        if (!usuario || !bcrypt.compareSync(dto.clave, usuario.clave)) {
+            throw new UnauthorizedException('Credenciales inválidas');
         }
 
         const payload = { nombre: usuario.nombre, sub: usuario.id };

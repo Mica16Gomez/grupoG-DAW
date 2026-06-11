@@ -1,4 +1,5 @@
 import { Component, inject } from "@angular/core";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { AuthStore } from "../auth/auth-store";
 
@@ -6,7 +7,7 @@ import { AuthStore } from "../auth/auth-store";
     selector: 'app-template',
     templateUrl: './template.html',
     styleUrl: './template.css',
-    imports: [ButtonModule]
+    imports: [ButtonModule, RouterLink, RouterLinkActive]
 })
 export class Template {
 

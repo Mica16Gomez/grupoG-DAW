@@ -1,0 +1,170 @@
+.estadisticas-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.estadisticas-header h2 {
+    margin: 0 0 0.35rem;
+    color: #4ade80;
+    font-size: 1.5rem;
+}
+
+.subtitulo {
+    margin: 0;
+    color: rgba(226, 232, 240, 0.75);
+    font-size: 0.95rem;
+}
+
+.estado-carga {
+    color: rgba(226, 232, 240, 0.7);
+    font-style: italic;
+}
+
+.metricas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metrica-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: 12px;
+    background: #1a2332;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metrica-icono {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+}
+
+.metrica-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.metrica-valor {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #f8fafc;
+    line-height: 1.1;
+}
+
+.metrica-titulo {
+    font-size: 0.85rem;
+    color: rgba(226, 232, 240, 0.75);
+    margin-top: 0.2rem;
+}
+
+.metrica--pendientes .metrica-icono {
+    background: rgba(251, 191, 36, 0.18);
+    color: #fbbf24;
+}
+
+.metrica--finalizados .metrica-icono,
+.metrica--tareas-ok .metrica-icono {
+    background: rgba(34, 197, 94, 0.18);
+    color: #4ade80;
+}
+
+.metrica--clientes .metrica-icono {
+    background: rgba(56, 189, 248, 0.18);
+    color: #38bdf8;
+}
+
+.paneles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.panel h3 {
+    margin: 0 0 1rem;
+    color: #e2e8f0;
+    font-size: 1.05rem;
+}
+
+.panel-tabla {
+    grid-column: 1 / -1;
+}
+
+:host ::ng-deep .panel-tabla .p-datatable {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+:host ::ng-deep .panel-tabla .p-datatable-thead > tr > th {
+    background: rgba(38, 191, 166, 0.15);
+    color: #4ade80;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+:host ::ng-deep .panel-tabla .p-datatable-tbody > tr {
+    background: #1a2332;
+    color: #e2e8f0;
+}
+
+:host ::ng-deep .panel-tabla .p-datatable-tbody > tr > td {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.barras-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.barra-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.barra-etiquetas {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.barra-fondo {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.barra-relleno {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+.barra-relleno--tarea {
+    background: linear-gradient(90deg, #fbbf24, #4ade80);
+}
+
+.barra-relleno--proyecto {
+    background: linear-gradient(90deg, #38bdf8, #4ade80);
+}
