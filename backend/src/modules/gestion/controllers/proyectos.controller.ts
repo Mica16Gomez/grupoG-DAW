@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Header,
-  NotImplementedException,
   Param,
   ParseIntPipe,
   Post,
@@ -20,63 +19,71 @@ import { ProyectoDTO } from "../dtos/output/proyecto.dto";
 import { ProyectosService } from "../services/proyectos.service";
 import { AuthGuard } from "../../auth/guards/auth.guard";
 
-@Controller('proyectos')
+@Controller("proyectos")
 export class ProyectosController {
+  constructor(private readonly proyectosService: ProyectosService) {}
 
-    constructor(private readonly proyectosService: ProyectosService) { }
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Post()
+  async crearProyecto(@Body() dto: CreateProyectoDto): Promise<{ id: number }> {
+    return await this.proyectosService.crearProyecto(dto);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @Post()
-    async crearProyecto(@Body() dto: CreateProyectoDto): Promise<{ id: number }> {
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Put(":id")
+  async actualizarProyecto(
+    @Body() dto: UpdateProyectoDto,
+    @Param("id", ParseIntPipe) id: number
+  ): Promise<void> {
+    await this.proyectosService.actualizarProyecto(id, dto);
+  }
 
-       return await this.proyectosService.crearProyecto(dto);
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: ListProyectoDTO, isArray: true })
+  @UseGuards(AuthGuard)
+  @Get()
+  async obtenerProyectos(): Promise<ListProyectoDTO[]> {
+    return await this.proyectosService.obtenerProyectos();
+  }
 
-    }
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get(":id")
+  async obtenerProyecto(
+    @Param("id", ParseIntPipe) id: number
+  ): Promise<ProyectoDTO> {
+    return await this.proyectosService.obtenerProyecto(id);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @Put(':id')
-    async actualizarProyecto(@Body() dto: UpdateProyectoDto, @Param('id', ParseIntPipe) id: number): Promise<void> {
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get("exportar/csv")
+  @Header("Content-Type", "text/csv; charset=utf-8")
+  @Header("Content-Disposition", "attachment; filename=proyectos.csv")
+  async exportarProyectosCSV(@Res() res: Response): Promise<void> {
+    const proyectos = await this.proyectosService.obtenerProyectos();
 
-        await this.proyectosService.actualizarProyecto(id, dto);
-    }
+    let csvData = "\uFEFFID,Nombre del Proyecto,Cliente,Fecha Fin,Estado\n";
 
-    @ApiBearerAuth()
-    @ApiOkResponse({ type: ListProyectoDTO, isArray: true })
-    @UseGuards(AuthGuard)
-    @Get()
-    async obtenerProyectos(): Promise<ListProyectoDTO[]> {
+    proyectos.forEach((p) => {
+      const nombreProyecto = p.nombre.replace(/,/g, " ");
+      const nombreCliente = p.cliente
+        ? p.cliente.nombre.replace(/,/g, " ")
+        : "Sin Cliente";
 
-        return await this.proyectosService.obtenerProyectos();
-    }
+      const fechaFin = p.fechaFinalizacion
+        ? (() => {
+            const fechaTexto = String(p.fechaFinalizacion).slice(0, 10);
+            const [anio, mes, dia] = fechaTexto.split("-");
+            return `${dia}/${mes}/${anio}`;
+          })()
+        : "Sin fecha";
 
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @Get(':id')
-    async obtenerProyecto(@Param('id', ParseIntPipe) id: number): Promise<ProyectoDTO> {
+      csvData += `${p.id},"${nombreProyecto}","${nombreCliente}","${fechaFin}","${p.estado}"\n`;
+    });
 
-        return await this.proyectosService.obtenerProyecto(id);
-    }
-
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @Get('exportar/csv')
-    @Header('Content-Type', 'text/csv; charset=utf-8')
-    @Header('Content-Disposition', 'attachment; filename=proyectos.csv')
-    async exportarProyectosCSV(@Res() res: Response): Promise<void> {
-        
-        const proyectos = await this.proyectosService.obtenerProyectos(); 
-
-        let csvData = 'ID,Nombre del Proyecto,Cliente,Estado\n';
-
-        proyectos.forEach(p => {
-            const nombreProyecto = p.nombre.replace(/,/g, ' ');
-            const nombreCliente = p.cliente ? p.cliente.nombre.replace(/,/g, ' ') : 'Sin Cliente';
-            
-            csvData += `${p.id},"${nombreProyecto}","${nombreCliente}","${p.estado}"\n`;
-        });
-
-        res.status(200).send(Buffer.from(csvData, 'utf-8'));
-    }
+    res.status(200).send(Buffer.from(csvData, "utf-8"));
+  }
 }

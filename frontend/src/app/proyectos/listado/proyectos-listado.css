@@ -1,32 +1,66 @@
 #boton-gestionar-tareas {
-    margin-right: 1rem;
+  margin-right: 1rem;
+}
+
+.acciones-superiores {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 #tabla {
-    margin-top: 1rem;
+  margin-top: 0;
+}
+
+.fecha-fin-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-start;
+}
+
+.fecha-fin-texto {
+  font-size: 0.9rem;
+}
+
+.sin-fecha {
+  color: gray;
+  font-style: italic;
+}
+
+:host ::ng-deep .boton-accion {
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #41d6a3, #28c891);
+  box-shadow: 0 10px 24px rgba(65, 214, 163, 0.2);
+}
+
+:host ::ng-deep .boton-accion .p-button-label {
+  font-weight: 700;
 }
 
 :host ::ng-deep #tabla .p-datatable {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 :host ::ng-deep #tabla .p-datatable-thead > tr > th {
-    background: rgba(38, 191, 166, 0.15);
-    color: #4ade80;
-    border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(38, 191, 166, 0.15);
+  color: #4ade80;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 :host ::ng-deep #tabla .p-datatable-tbody > tr {
-    background: #1a2332;
-    color: #e2e8f0;
+  background: #1a2332;
+  color: #e2e8f0;
 }
 
 :host ::ng-deep #tabla .p-datatable-tbody > tr > td {
-    border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 :host ::ng-deep #tabla .p-datatable-tbody > tr:hover {
-    background: #243044;
+  background: #243044;
 }

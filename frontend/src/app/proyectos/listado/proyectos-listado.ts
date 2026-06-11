@@ -91,27 +91,45 @@ export class ProyectosListado {
     }
   });
 }
-  // --- LÓGICA PARA CUMPLIR LA CONSIGNA DE LOS RETRASOS ---
-  calcularEstadoFecha(fechaStr: any): { texto: string, severidad: 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' } {
-    if (!fechaStr) return { texto: 'Sin fecha', severidad: 'secondary' };
-
-    const fechaFin = new Date(fechaStr);
-    const hoy = new Date();
-
-    // Igualamos las horas a cero para comparar solo los días exactos
-    hoy.setHours(0, 0, 0, 0);
-    fechaFin.setHours(0, 0, 0, 0);
-
-    const diffTime = fechaFin.getTime() - hoy.getTime();
-    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-        return { texto: `Retrasado (${Math.abs(diffDays)} días)`, severidad: 'danger' }; // Rojo
-    } else if (diffDays === 0) {
-        return { texto: 'Vence hoy', severidad: 'warn' }; // Amarillo/Naranja
-    } else {
-        return { texto: `Faltan ${diffDays} días`, severidad: 'info' }; // Azul
-    }
+calcularEstadoFecha(fechaStr: any): {
+  texto: string;
+  severidad: 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast';
+} {
+  if (!fechaStr) {
+    return { texto: 'Sin fecha', severidad: 'secondary' };
   }
 
-}
+  let fechaFin: Date;
+
+  if (typeof fechaStr === 'string' && fechaStr.includes('-')) {
+    const [anio, mes, dia] = fechaStr.split('-').map(Number);
+    fechaFin = new Date(anio, mes - 1, dia);
+  } else {
+    fechaFin = new Date(fechaStr);
+  }
+
+  const hoy = new Date();
+
+  hoy.setHours(0, 0, 0, 0);
+  fechaFin.setHours(0, 0, 0, 0);
+
+  const diffTime = fechaFin.getTime() - hoy.getTime();
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) {
+    return {
+      texto: `Retrasado (${Math.abs(diffDays)} días)`,
+      severidad: 'danger',
+    };
+  } else if (diffDays === 0) {
+    return {
+      texto: 'Vence hoy',
+      severidad: 'warn',
+    };
+  } else {
+    return {
+      texto: `Faltan ${diffDays} días`,
+      severidad: 'info',
+    };
+  }
+}}
