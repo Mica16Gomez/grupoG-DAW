@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/proyectos/listado/proyectos-listado.css"],
-  "sourcesContent": ["#boton-gestionar-tareas {\r\n    margin-right: 1rem;\r\n}\r\n\r\n#tabla {\r\n    margin-top: 1rem;\r\n}\r\n\r\n:host ::ng-deep #tabla .p-datatable {\r\n    border: 1px solid rgba(255, 255, 255, 0.1);\r\n    border-radius: 12px;\r\n    overflow: hidden;\r\n}\r\n\r\n:host ::ng-deep #tabla .p-datatable-thead > tr > th {\r\n    background: rgba(38, 191, 166, 0.15);\r\n    color: #4ade80;\r\n    border-color: rgba(255, 255, 255, 0.08);\r\n}\r\n\r\n:host ::ng-deep #tabla .p-datatable-tbody > tr {\r\n    background: #1a2332;\r\n    color: #e2e8f0;\r\n}\r\n\r\n:host ::ng-deep #tabla .p-datatable-tbody > tr > td {\r\n    border-color: rgba(255, 255, 255, 0.08);\r\n}\r\n\r\n:host ::ng-deep #tabla .p-datatable-tbody > tr:hover {\r\n    background: #243044;\r\n}\r\n"],
-  "mappings": ";AAAA,CAAC;AACG,gBAAc;AAClB;AAEA,CAAC;AACG,cAAY;AAChB;AAEA,MAAM,UAAU,CAJf,MAIsB,CAAC;AACpB,UAAQ,IAAI,MAAM,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACtC,iBAAe;AACf,YAAU;AACd;AAEA,MAAM,UAAU,CAVf,MAUsB,CAAC,kBAAkB,EAAE,GAAG,EAAE;AAC7C,cAAY,KAAK,EAAE,EAAE,GAAG,EAAE,GAAG,EAAE;AAC/B,SAAO;AACP,gBAAc,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACtC;AAEA,MAAM,UAAU,CAhBf,MAgBsB,CAAC,kBAAkB,EAAE;AACxC,cAAY;AACZ,SAAO;AACX;AAEA,MAAM,UAAU,CArBf,MAqBsB,CALC,kBAKkB,EAAE,GAAG,EAAE;AAC7C,gBAAc,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACtC;AAEA,MAAM,UAAU,CAzBf,MAyBsB,CATC,kBASkB,EAAE,EAAE;AAC1C,cAAY;AAChB;",
-  "names": []
-}

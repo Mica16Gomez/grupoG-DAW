@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/proyectos/gestion/gestion-proyecto.css"],
-  "sourcesContent": ["#contenedor-formulario{\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n#nombre{\r\n    margin-bottom: 1rem;\r\n}\r\n\r\n#cliente{\r\n    margin-bottom: 1rem;\r\n}\r\n\r\n#estado{\r\n    margin-bottom: 1rem;\r\n}\r\n\r\n#boton-gestionar-clientes{\r\n    margin-bottom: 1rem;\r\n\r\n}\r\n\r\n#guardar{\r\n    align-self: center;\r\n}"],
-  "mappings": ";AAAA,CAAC;AACG,WAAS;AACT,kBAAgB;AACpB;AAEA,CAAC;AACG,iBAAe;AACnB;AAEA,CAAC;AACG,iBAAe;AACnB;AAEA,CAAC;AACG,iBAAe;AACnB;AAEA,CAAC;AACG,iBAAe;AAEnB;AAEA,CAAC;AACG,cAAY;AAChB;",
-  "names": []
-}

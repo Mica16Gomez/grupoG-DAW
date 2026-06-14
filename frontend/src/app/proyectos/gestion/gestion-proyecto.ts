@@ -15,14 +15,12 @@ import { ClientesListadoApiClient } from "../clientes/listado/clientes-listado-a
 import { ClientesListado } from "../clientes/listado/clientes-listado";
 import { EstadosClientesEnum } from "../clientes/estados-clientes-enum";
 import { NgSelectModule } from '@ng-select/ng-select';
-// --- AHORA USAMOS DATEPICKER EN LUGAR DE CALENDAR ---
 import { DatePickerModule } from 'primeng/datepicker'; 
 
 @Component({
     selector: "app-gestion-proyecto",
     templateUrl: "./gestion-proyecto.html",
     styleUrls: ["./gestion-proyecto.css"],
-    // --- CAMBIADO AQUÍ TAMBIÉN ---
     imports: [DialogModule, InputTextModule, SelectModule, ButtonModule, ReactiveFormsModule, ClientesListado, NgSelectModule, DatePickerModule] 
 })
 export class GestionProyecto {

@@ -5,7 +5,7 @@ export interface ListProyectoDTO{
     nombre: string;
     estado: string;
     cliente: ListClienteDTO;
-    fechaFinalizacion?: Date; // <-- NUEVO CAMPO
+    fechaFinalizacion?: Date; 
 
 
 }

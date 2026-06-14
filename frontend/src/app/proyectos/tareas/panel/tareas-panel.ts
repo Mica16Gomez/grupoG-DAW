@@ -43,10 +43,6 @@ export class TareasPanel {
         },
     ];
 
-    /**
-     * Agrupa las tareas por estado. Cada columna del panel muestra
-     * únicamente las tareas cuyo estado coincide con el de la columna.
-     */
     readonly tareasAgrupadas: Signal<TareasAgrupadas> = computed(() => {
         const lista = this.tareas();
         return {

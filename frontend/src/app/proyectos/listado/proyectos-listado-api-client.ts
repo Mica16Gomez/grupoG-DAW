@@ -15,10 +15,9 @@ export class ProyectosListadoApiClient {
     }
 
     exportarCSV(): Observable<Blob> {
-        const token = localStorage.getItem('token'); // Recupera el JWT de autenticación
+        const token = localStorage.getItem('token'); 
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        // Como usas proxy.conf.json, le pegamos directamente de forma relativa
         return this.httpClient.get('/api/v1/proyectos/exportar/csv', {
             headers: headers,
             responseType: 'blob'

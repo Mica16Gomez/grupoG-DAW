@@ -1,96 +1,55 @@
-# Sistema de Gestión de Proyectos — grupoG-DAW
+# Sistema de Gestión de Proyectos – grupoG-DAW
 
-Integrantes:
-- Gomez, Micaela (Mica16Gomez)
-- Mernes, Eileen Isabella (isabellamernes)
-- Soto, Jonatan Emanuel Luis (joni4567/jesoto)
-- Chamorro, Thiago (thiagocc23)
+## Integrantes
+- Gomez, Micaela
+- Mernes, Eileen Isabella
+- Soto, Jonatan Emanuel Luis
+- Chamorro, Thiago
 
-## Stack
+## Contenido de la entrega
+Este archivo `.zip` contiene:
+- código fuente del backend
+- código fuente del frontend
+- configuración utilizada para despliegue local con PM2 y Nginx
 
-- **Backend:** NestJS 11, TypeORM, PostgreSQL, JWT
-- **Frontend:** Angular 21, PrimeNG 21
+## Enlace al video
+Pegá aquí el enlace al video:
+https://drive.google.com/file/d/19Bws5nseIMBxJu9o-N7d1EO6OJdxLM5o/view
+
+
+## Descripción
+Trabajo Final Integrador correspondiente al sistema de gestión de proyectos.
+
+El sistema permite:
+- gestión de proyectos
+- gestión de tareas
+- estadísticas generales
+- gestión de clientes
+- registro de datos de contacto de clientes, incluyendo teléfono y correo electrónico
+
+## Tecnologías utilizadas
+- **Backend:** NestJS, TypeORM, PostgreSQL, JWT
+- **Frontend:** Angular, PrimeNG
+- **Despliegue local:** PM2 y Nginx
 
 ## Requisitos previos
-
-- Node.js 20+
-- PostgreSQL 14+
+- Node.js
 - npm
+- PostgreSQL
 
-## 1. Base de datos
+## Configuración de variables de entorno
+Crear un archivo `.env` en backend con una estructura similar a esta:
 
-```bash
-# Crear la base de datos en PostgreSQL
-createdb gestion_proyectos
-
-# Ejecutar el esquema
-psql -U postgres -d gestion_proyectos -f backend/database/schema.sql
-
-# (Opcional) Datos de ejemplo
-psql -U postgres -d gestion_proyectos -f backend/database/seed.sql
-```
-
-## 2. Backend
-
-```bash
-cd backend
-cp .env.example .env
-# Editar .env con tus credenciales de PostgreSQL
-
-npm install
-node scripts/seed-admin.js   # Crea usuario admin / admin123
-npm run start:dev
-```
-
-API disponible en `http://localhost:3000`  
-Swagger (si `SWAGGER_HABILITADO=true`): `http://localhost:3000/api`
-
-## 3. Frontend
-
-En otra terminal:
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-App disponible en `http://localhost:4200`
-
-## Credenciales de prueba
-
-| Usuario | Contraseña |
-|---------|------------|
-| admin   | admin123   |
-
-## Funcionalidades principales
-
-- Login con JWT
-- CRUD de clientes, proyectos y tareas
-- **Panel visual de tareas (Kanban):** tarjetas organizadas en columnas por estado (`PENDIENTE`, `FINALIZADA`, `BAJA`)
-- Arrastrar y soltar tarjetas entre columnas para cambiar el estado
-- Crear y editar tareas desde diálogo modal
-- **Estadísticas:** dashboard con métricas de proyectos, tareas y clientes
+```env
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=*****
+DB_NAME=gestor_de_proyectos
+DB_LOGGING=true
+SWAGGER_HABILITADO=true
+JWT_SECRET=*****
 
 
-## Rutas del frontend
 
-| Ruta | Descripción |
-|------|-------------|
-| `/login` | Inicio de sesión |
-| `/proyectos` | Listado de proyectos |
-| `/proyectos/:id/tareas` | Panel Kanban de tareas del proyecto |
-| `/estadisticas` | Dashboard de métricas del sistema |
-
-## Estructura del proyecto
-
-```
-grupoG-DAW/
-├── backend/          # API NestJS
-│   ├── database/     # schema.sql, seed.sql
-│   └── src/
-└── frontend/         # App Angular
-    └── src/app/
-        ├── proyectos/tareas/panel/   # Componente Kanban
-        └── estadisticas/             # Dashboard de métricas
-```
