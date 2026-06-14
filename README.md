@@ -12,11 +12,6 @@ Este archivo `.zip` contiene:
 - código fuente del frontend
 - configuración utilizada para despliegue local con PM2 y Nginx
 
-## Enlace al video
-Pegá aquí el enlace al video:
-https://drive.google.com/file/d/19Bws5nseIMBxJu9o-N7d1EO6OJdxLM5o/view
-
-
 ## Descripción
 Trabajo Final Integrador correspondiente al sistema de gestión de proyectos.
 
